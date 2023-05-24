@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {fetchPosts} from '../actions/postAction'
+import {savePosts} from '../actions/postAction'
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -7,14 +7,14 @@ import {connect} from 'react-redux';
     render() {
         return (
             <div>
-                <button  className="btn-orange" onClick={()=>this.props.fetchPosts()}>Submit</button>
+                <button  className="btn-orange" onClick={()=>this.props.savePosts()}>Submit</button>
             </div>
         )
     }
 }
 
 function matchDispatchToProps(dispatch){
- return bindActionCreators({fetchPosts: fetchPosts},dispatch)
+ return bindActionCreators({savePosts: savePosts},dispatch)
 }
 
 export default connect(null,matchDispatchToProps)(ButtonComponent)

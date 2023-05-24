@@ -2,7 +2,7 @@ import {SUBMIT_BUTTON_CLICKED,SELECT_APOIMENT} from './types';
 import axios from 'axios';
 import {  api } from'../services/index';
 
-export const fetchPosts=()=>dispatch=>{
+export const savePosts=()=>dispatch=>{
     api.post('get_appointment_save')
     .then(res=>{
       dispatch({
