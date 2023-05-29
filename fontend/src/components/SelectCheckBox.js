@@ -55,10 +55,11 @@ const InputOption = ({
 };
 
 const allOptions = [
-  { value: "option 1", label: "option 1" },
-  { value: "option 2", label: "option 2" },
-  { value: "option 3", label: "option 3" },
-  { value: "option 4", label: "option 4" }
+  { value: "1", label: "Accident and emergency medicine" },
+  { value: "2", label: "Addiction Medicine" },
+  { value: "3", label: "Allergy" },
+  { value: "4", label: "Allergy and immunology" },
+  { value: "5", label: "Anaesthesology" }
 ];
 
 export default function SelectCheckBox() {
@@ -81,7 +82,7 @@ export default function SelectCheckBox() {
           Option: InputOption
         }}
       />
-      <pre>{JSON.stringify({ selected: selectedOptions }, null, 2)}</pre>
+  
     </div>
   );
 }

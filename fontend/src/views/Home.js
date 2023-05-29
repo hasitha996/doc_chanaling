@@ -1,6 +1,7 @@
 import React from "react";
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Form, Input, Button, Alert, Row, Col, Radio, Card,Space } from 'antd';
+import { api, msg } from '../services';
 import { TeamOutlined, CommentOutlined } from '@ant-design/icons';
 import ButtonComponent from '../components/ButtonComponent';
 import SearchBar from "../components/SearchBar";
@@ -8,6 +9,7 @@ import SelectCheckBox from '../components/SelectCheckBox';
 import AppDatepicker from '../components/AppDatepicker';
 import '../style/HomeStyle.scss';
 import SingalSelect from '../components/SingalSelect';
+import axios from 'axios';
 
 
 export const Home = () => {
@@ -20,6 +22,11 @@ export const Home = () => {
     setValue(e.target.value);
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+ 
+
   const handlePatientNameChange = (e) => {
     setPatientname(e.target.value);
   };
@@ -30,6 +37,23 @@ export const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+  };
+  const [listhospitel, setHospitel] = useState([]);
+  const [listdocters, setDoc] = useState([]);
+  
+  const fetchData = async () => {
+    try {
+   //call api for get docter and hospitel list
+      axios.get(`http://localhost:8000/api/appointment`)
+      .then(res => {
+            setHospitel(res.data.hospitel_list);
+            setDoc(res.data.doctor_list);  
+      })
+      
+    } catch (error) {
+     
+      return msg.error('Unable to fetch data!');
+    }
   };
   const gridStyle = {
     width: '33%',
@@ -46,66 +70,24 @@ export const Home = () => {
     background: '#152238'
   };
 
-  const BookData = [
+  const doc1 = [
     {
       id: 1,
-      title: 'Enjoy studying English',
-      tags: [
-        {
-          id: 'tag1',
-          title: 'English',
-          slug: 'english',
-        },
-        {
-          id: 'tag2',
-          title: 'For kids',
-          slug: 'kids',
-        },
-      ],
+      name: 'test1'
+      
     },
     {
       id: 2,
-      title: 'Parlons français',
-      tags: [
-        {
-          id: 'tag3',
-          title: 'French',
-          slug: 'french',
-        },
-        { id: 'tag2', title: 'Kids', slug: 'kids' },
-      ],
+      name: 'test2'
     },
     {
       id: 3,
-      title: 'Intermediate English',
-      tags: [
-        {
-          id: 'tag1',
-          title: 'English',
-          slug: 'english',
-        },
-        {
-          id: 'tag4',
-          title: 'Adults',
-          slug: 'adults',
-        },
-      ],
+      name: 'test 3'
     },
     {
       id: 4,
-      title: 'How to study French',
-      tags: [
-        {
-          id: 'tag3',
-          title: 'French',
-          slug: 'french',
-        },
-        {
-          id: 'tag4',
-          title: 'Adults',
-          slug: 'adults',
-        },
-      ],
+      name: 'test4',
+     
     },
   ];
 
@@ -194,7 +176,7 @@ export const Home = () => {
         <Col span="9">
           <Row>
             <Space direction="vertical" >
-            <SearchBar placeholder="Search" data={BookData} />
+            <SearchBar placeholder="Search" data={doc1} />
             <br/>
             <br/>
             <SingalSelect />
