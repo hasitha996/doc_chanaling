@@ -18,11 +18,11 @@ class CreateAppointmentsTable extends Migration
             $table->date('date_of_appointment');
             $table->string('name',60);
             $table->string('email_phone',40);
-            $table->integer('doc_id');
-            $table->integer('country_id');
-            $table->integer('state_id');
-            $table->integer('specility_id');
-            $table->integer('is_self');
+            $table->integer('doc_id')->nullable()->default(0);
+            $table->integer('country_id')->nullable()->default(0);
+            $table->integer('state_id')->nullable()->default(0);
+            $table->integer('specility_id')->nullable()->default(0);
+            $table->integer('is_self')->nullable()->default(0);
             $table->integer('is_someone');
           
             $table->timestamps();
