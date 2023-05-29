@@ -10,5 +10,5 @@ after  downlod all node files
 
 run fontend with npm start
 
-this app conect with laravel backend with passport authontication 
+this app conect with laravel backend  
 

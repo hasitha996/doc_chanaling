@@ -1,8 +1,8 @@
 # This is the backend part of the system
 
-ran on php 7.2 with laravel version 8
+ran on php 7.2 with laravel version 8 with rest api
  
- Passport auth use as a authantication for the api
+
  
  
  #run Project

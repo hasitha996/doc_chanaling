@@ -13,7 +13,7 @@ const defaultHeaders = {
 
 
 const defaultPath = 'http://127.0.0.1:8000/api';
-export default {
+export default  {
   async get(url) {
     try {
       const res = await axios.get(`${defaultPath}/${url}`, {
@@ -82,3 +82,4 @@ export default {
     }
   },
 };
+
