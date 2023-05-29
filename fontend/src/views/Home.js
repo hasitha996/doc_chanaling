@@ -238,7 +238,8 @@ export const Home = (props) => {
 
                 </Col>
                 <Col span="12">
-
+                  <br/> 
+               
                 </Col>
               </Card.Grid>
               <Card.Grid hoverable={false} style={gridStyle}>
