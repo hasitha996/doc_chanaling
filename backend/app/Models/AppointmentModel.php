@@ -18,6 +18,7 @@ class AppointmentModel extends Model
         'doc_id',
         'country_id',
         'specility_id',
+        'state_id'
       
       
     ];

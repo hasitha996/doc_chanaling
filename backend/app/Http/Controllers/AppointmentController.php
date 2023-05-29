@@ -10,6 +10,7 @@ use \Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendConfomMail;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class AppointmentController extends Controller
@@ -60,22 +61,30 @@ class AppointmentController extends Controller
         try {
             DB::beginTransaction();
             $rules = [
-                'name' => 'required|string|min:3|max:255',
-                'email' => 'required|string|email|max:255'
+                'patientname' => 'required|string|min:3|max:255',
+                'patientemail' => 'required|string|email|max:255'
             ];
             $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
                 return response()->json( $this->error);
             } else {
-                $this->model_obj['des'] = $request['des'];
-                $this->model_obj['contact_person'] = $request['contact_person'];
-                $this->model_obj['contact_number'] = $request['contact_number'];
-                $this->model_obj['email'] = $request['email'];
+
+                $tdate = (new Carbon())->format('Y-m-d');
+
+
+                $this->model_obj['date_of_appointment'] =   $tdate ;
+                $this->model_obj['name'] = $request['patientname'];
+                $this->model_obj['email_phone'] = $request['patientemail'];
+                $this->model_obj['is_self'] = $request['is_self'];
+                $this->model_obj['is_someone'] = $request['is_someone'];
+                $this->model_obj['country_id'] = $request['country'];
+                $this->model_obj['state_id'] = $request['state_id'];
+                $this->model_obj['specility_id'] = $request['spacific'];
 
                 $this->model_obj->save();
 
-                $this->sendmail($request['mail']);
+                // $this->sendmail($request['mail']);
             }
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState,useEffect } from 'react';
 import { Form, Input, Button, Alert, Row, Col, Radio, Card,Space } from 'antd';
-import { api, msg } from '../services';
+import { toastContainer, toast } from 'react-toastify';
 import { TeamOutlined, CommentOutlined } from '@ant-design/icons';
 import ButtonComponent from '../components/ButtonComponent';
 import SearchBar from "../components/SearchBar";
@@ -10,12 +10,18 @@ import AppDatepicker from '../components/AppDatepicker';
 import '../style/HomeStyle.scss';
 import SingalSelect from '../components/SingalSelect';
 import axios from 'axios';
+import { useDispatch } from "react-redux";
+import createPostAction from '../actions/postAction';
 
-
-export const Home = () => {
+export const Home = (props) => {
   const [value, setValue] = useState(1);
   const [patientname, setPatientname] = useState();
   const [patientemail, setPatientemail] = useState();
+  const [is_self, setis_self] = useState();
+  const [is_someone, setis_someone] = useState();
+  const country='';
+  const state_id='';
+  const spacific='';
 
   const onChange = (e) => {
     // console.log('radio checked', e.target.value);
@@ -34,10 +40,25 @@ export const Home = () => {
     setPatientemail(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const dispatch=useDispatch;
+ 
 
+  const handleSubmit = (e) => {
+    // console.log('Success:', e);
+    // e.preventDefault();
+    const postData={
+      patientname,
+      patientemail,
+      is_self,
+      is_someone,
+      country,
+      state_id,
+      spacific
+    };
+    dispatch(createPostAction(postData, props.history));
   };
+
+
   const [listhospitel, setHospitel] = useState([]);
   const [listdocters, setDoc] = useState([]);
   
@@ -52,7 +73,7 @@ export const Home = () => {
       
     } catch (error) {
      
-      return msg.error('Unable to fetch data!');
+      return toast.error('Unable to fetch data!');
     }
   };
   const gridStyle = {
@@ -69,7 +90,20 @@ export const Home = () => {
     color: 'white',
     background: '#152238'
   };
-
+  const setDates = [
+    {
+      id: 1,
+      date: "2023-05-16"
+    },
+    {
+      id: 2,
+      date: "2023-05-18"
+    },
+    {
+      id: 3,
+      date: "2023-05-20"
+    }
+  ];
   const doc1 = [
     {
       id: 1,
@@ -91,33 +125,9 @@ export const Home = () => {
     },
   ];
 
-  const setDates = [
-    {
-      id: 1,
-      date: "2023-05-16"
-    },
-    {
-      id: 2,
-      date: "2023-05-18"
-    },
-    {
-      id: 3,
-      date: "2023-05-20"
-    }
-  ];
 
-  const options = [
-    { value: "blues", label: "Blues" },
-    { value: "rock", label: "Rock" },
-    { value: "jazz", label: "Jazz" },
-    { value: "orchestra", label: "Orchestra" },
-  ];
-
-  const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-  };
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form  onFinish={handleSubmit} onSubmit={e => e.preventDefault()}>
       <Row>
         <Col span="8"></Col>
         <Col span="12"><h1>Search Doctor,Make An Appoinment</h1></Col>
@@ -137,15 +147,15 @@ export const Home = () => {
         <Col span="3">Treatement Inquiry for </Col>
         <Col span="5">
           <Radio.Group onChange={onChange} value={value}>
-            <Radio value={1}>My Self</Radio>
-            <Radio value={2}>Someone</Radio>
+            <Radio    name="is_self" value={1}>My Self</Radio>
+            <Radio    name="is_someone" value={2}>Someone</Radio>
           </Radio.Group>
 
         </Col>
         <Col span="4">
           <Form.Item
-            name="patientemail"
-            value={patientemail}
+            name="patientname"
+            value={patientname}
             onChange={handlePatientNameChange}
             rules={[{ required: true, message: 'Please input your name!' }]}
           >
@@ -156,8 +166,8 @@ export const Home = () => {
         <Col span="4">
           <Form.Item
 
-            name="patientname"
-            value={patientname}
+            name="patientemail"
+            value={patientemail}
             onChange={handlePatientEmailChange}
             rules={[{ required: true, message: 'Please input your email or phone!' }]}
           >
@@ -166,7 +176,9 @@ export const Home = () => {
         </Col>
         <Col span="4">
           <Form.Item>
-            <ButtonComponent></ButtonComponent>
+          <Button type="primary"   className="btn-orange"  htmlType="submit">
+        Submit
+      </Button>
           </Form.Item>
         </Col>
       </Row>
@@ -176,14 +188,14 @@ export const Home = () => {
         <Col span="9">
           <Row>
             <Space direction="vertical" >
-            <SearchBar placeholder="Search" data={doc1} />
+            <SearchBar  name="doc_id" placeholder="Search" data={doc1} />
             <br/>
             <br/>
-            <SingalSelect />
+            <SingalSelect name="country" />
             <br/>           
-            <SingalSelect />
+            <SingalSelect name="state_id"/>
             <br/>     
-            <SelectCheckBox/>          
+            <SelectCheckBox name="spesific"/>          
             </Space>
           </Row>
 

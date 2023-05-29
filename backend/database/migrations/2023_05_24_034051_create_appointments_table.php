@@ -20,6 +20,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('email_phone',40);
             $table->integer('doc_id');
             $table->integer('country_id');
+            $table->integer('state_id');
             $table->integer('specility_id');
             $table->integer('is_self');
             $table->integer('is_someone');
