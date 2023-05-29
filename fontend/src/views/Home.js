@@ -1,6 +1,6 @@
 import React from "react";
-import { useState,useEffect } from 'react';
-import { Form, Input, Button, Alert, Row, Col, Radio, Card,Space } from 'antd';
+import { useState, useEffect } from 'react';
+import { Form, Input, Button, Alert, Row, Col, Radio, Card, Space } from 'antd';
 import { toastContainer, toast } from 'react-toastify';
 import { TeamOutlined, CommentOutlined } from '@ant-design/icons';
 import ButtonComponent from '../components/ButtonComponent';
@@ -8,10 +8,10 @@ import SearchBar from "../components/SearchBar";
 import SelectCheckBox from '../components/SelectCheckBox';
 import AppDatepicker from '../components/AppDatepicker';
 import '../style/HomeStyle.scss';
-import SingalSelect from '../components/SingalSelect';
 import axios from 'axios';
 import { useDispatch } from "react-redux";
 import createPostAction from '../actions/postAction';
+import Select from "react-select";
 
 export const Home = (props) => {
   const [value, setValue] = useState(1);
@@ -19,9 +19,9 @@ export const Home = (props) => {
   const [patientemail, setPatientemail] = useState();
   const [is_self, setis_self] = useState();
   const [is_someone, setis_someone] = useState();
-  const country='';
-  const state_id='';
-  const spacific='';
+  const country = '';
+  const state_id = '';
+  const spacific = '';
 
   const onChange = (e) => {
     // console.log('radio checked', e.target.value);
@@ -31,7 +31,7 @@ export const Home = (props) => {
   useEffect(() => {
     fetchData();
   }, []);
- 
+
 
   const handlePatientNameChange = (e) => {
     setPatientname(e.target.value);
@@ -40,13 +40,13 @@ export const Home = (props) => {
     setPatientemail(e.target.value);
   };
 
-  const dispatch=useDispatch;
- 
+  const dispatch = useDispatch;
+
 
   const handleSubmit = (e) => {
     // console.log('Success:', e);
     // e.preventDefault();
-    const postData={
+    const postData = {
       patientname,
       patientemail,
       is_self,
@@ -61,18 +61,18 @@ export const Home = (props) => {
 
   const [listhospitel, setHospitel] = useState([]);
   const [listdocters, setDoc] = useState([]);
-  
+
   const fetchData = async () => {
     try {
-   //call api for get docter and hospitel list
+      //call api for get docter and hospitel list
       axios.get(`http://localhost:8000/api/appointment`)
-      .then(res => {
-            setHospitel(res.data.hospitel_list);
-            setDoc(res.data.doctor_list);  
-      })
-      
+        .then(res => {
+          setHospitel(res.data.hospitel_list);
+          setDoc(res.data.doctor_list);
+        })
+
     } catch (error) {
-     
+
       return toast.error('Unable to fetch data!');
     }
   };
@@ -108,7 +108,7 @@ export const Home = (props) => {
     {
       id: 1,
       name: 'test1'
-      
+
     },
     {
       id: 2,
@@ -121,13 +121,28 @@ export const Home = (props) => {
     {
       id: 4,
       name: 'test4',
-     
+
     },
   ];
 
 
+
+  const state_list = [
+    { value: "1", label: "West" },
+    { value: "2", label: "Noth" },
+    { value: "3", label: "Central" },
+    { value: "4", label: "Sabaragamuwa" },
+  ];
+  const country_list = [
+    { value: "1", label: "Srilanka" },
+    { value: "2", label: "India" },
+    { value: "3", label: "Uk" },
+    { value: "4", label: "Usa" },
+  ];
+
+
   return (
-    <Form  onFinish={handleSubmit} onSubmit={e => e.preventDefault()}>
+    <Form onFinish={handleSubmit} onSubmit={e => e.preventDefault()}>
       <Row>
         <Col span="8"></Col>
         <Col span="12"><h1>Search Doctor,Make An Appoinment</h1></Col>
@@ -147,8 +162,8 @@ export const Home = (props) => {
         <Col span="3">Treatement Inquiry for </Col>
         <Col span="5">
           <Radio.Group onChange={onChange} value={value}>
-            <Radio    name="is_self" value={1}>My Self</Radio>
-            <Radio    name="is_someone" value={2}>Someone</Radio>
+            <Radio name="is_self" value={1}>My Self</Radio>
+            <Radio name="is_someone" value={2}>Someone</Radio>
           </Radio.Group>
 
         </Col>
@@ -176,9 +191,9 @@ export const Home = (props) => {
         </Col>
         <Col span="4">
           <Form.Item>
-          <Button type="primary"   className="btn-orange"  htmlType="submit">
-        Submit
-      </Button>
+            <Button type="primary" className="btn-orange" htmlType="submit">
+              SUBMIT
+            </Button>
           </Form.Item>
         </Col>
       </Row>
@@ -188,14 +203,14 @@ export const Home = (props) => {
         <Col span="9">
           <Row>
             <Space direction="vertical" >
-            <SearchBar  name="doc_id" placeholder="Search" data={doc1} />
-            <br/>
-            <br/>
-            <SingalSelect name="country" />
-            <br/>           
-            <SingalSelect name="state_id"/>
-            <br/>     
-            <SelectCheckBox name="spesific"/>          
+              <SearchBar name="doc_id" placeholder="Search" data={listdocters} />
+              <br />
+            
+              <Select name="country" options={country_list} />
+              <br />
+              <Select name="state_id" options={state_list} />
+              <br />
+              <SelectCheckBox name="spesific" />
             </Space>
           </Row>
 

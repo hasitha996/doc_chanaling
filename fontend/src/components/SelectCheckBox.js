@@ -68,8 +68,7 @@ export default function SelectCheckBox() {
   return (
     <div className="App">
       <Select
-        defaultValue={[]}
-        isMulti
+        defaultValue={[]}      
         closeMenuOnSelect={false}
         hideSelectedOptions={false}
         onChange={(options) => {
