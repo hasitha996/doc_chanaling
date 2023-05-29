@@ -23,7 +23,7 @@ class CreateAppointmentsTable extends Migration
             $table->integer('state_id')->nullable()->default(0);
             $table->integer('specility_id')->nullable()->default(0);
             $table->integer('is_self')->nullable()->default(0);
-            $table->integer('is_someone');
+            $table->integer('is_someone')->nullable()->default(0);
           
             $table->timestamps();
         });
