@@ -17,11 +17,13 @@ export const Home = (props) => {
   const [value, setValue] = useState(1);
   const [patientname, setPatientname] = useState();
   const [patientemail, setPatientemail] = useState();
-  const [is_self, setis_self] = useState();
-  const [is_someone, setis_someone] = useState();
-  const country = '';
-  const state_id = '';
-  const spacific = '';
+  const [is_self, setIs_self] = useState();
+  const [is_someone, setIs_someone] = useState();
+  const [country, setCountry] = useState();
+  const [state_id, setState_id] = useState();
+  const [spacific, setSpacific] = useState();
+  const [doc_id, setDoc_id] = useState();
+  
 
   const onChange = (e) => {
     // console.log('radio checked', e.target.value);
@@ -39,6 +41,25 @@ export const Home = (props) => {
   const handlePatientEmailChange = (e) => {
     setPatientemail(e.target.value);
   };
+  const handleis_selfChange = (e) => {
+    setIs_self(e.target.value);
+  };
+  const handleis_someoneChange = (e) => {
+    setIs_someone(e.target.value);
+  };
+  const handleState_id = (e) => {
+    setState_id(e.value);
+  };
+  const handleCountry = (e) => {
+    setCountry(e.value);
+    
+  };
+  const handleSpesific = (e) => {
+    setSpacific(e.value);
+  };
+  const handledoc_id = (e) => {
+    setDoc_id(e.target.value);
+  };
 
   const dispatch = useDispatch;
 
@@ -53,7 +74,8 @@ export const Home = (props) => {
       is_someone,
       country,
       state_id,
-      spacific
+      spacific,
+      doc_id
     };
     dispatch(createPostAction(postData, props.history));
   };
@@ -162,8 +184,8 @@ export const Home = (props) => {
         <Col span="3">Treatement Inquiry for </Col>
         <Col span="5">
           <Radio.Group onChange={onChange} value={value}>
-            <Radio name="is_self" value={1}>My Self</Radio>
-            <Radio name="is_someone" value={2}>Someone</Radio>
+            <Radio name="is_self"  onChange={handleis_selfChange} value={1}>My Self</Radio>
+            <Radio name="is_someone"  onChange={handleis_someoneChange} value={2}>Someone</Radio>
           </Radio.Group>
 
         </Col>
@@ -203,14 +225,14 @@ export const Home = (props) => {
         <Col span="9">
           <Row>
             <Space direction="vertical" >
-              <SearchBar name="doc_id" placeholder="Search" data={listdocters} />
+              <SearchBar name="doc_id" placeholder="Search"  onChange={handledoc_id} data={listdocters} />
               <br />
             
-              <Select name="country" options={country_list} />
+              <Select name="country"  onChange={handleCountry}  options={country_list} />
               <br />
-              <Select name="state_id" options={state_list} />
+              <Select name="state_id"  onChange={handleState_id}  options={state_list} />
               <br />
-              <SelectCheckBox name="spesific" />
+              <SelectCheckBox  onChange={handleSpesific}  name="spacific" />
             </Space>
           </Row>
 
