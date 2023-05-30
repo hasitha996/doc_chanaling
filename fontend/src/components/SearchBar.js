@@ -10,7 +10,7 @@ function SearchBar({ placeholder, data,icon }) {
   const handleFilter = (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
-    setWordEntered(event.target.value);
+   
     const newFilter = data.filter((value) => {
       return value.name.toLowerCase().includes(searchWord.toLowerCase());
     });
@@ -25,6 +25,12 @@ function SearchBar({ placeholder, data,icon }) {
   const clearInput = () => {
     setFilteredData([]);
     setWordEntered("");
+  };
+  
+  const selectInput = (e) => {
+   
+     setWordEntered(e.target.name);
+     setFilteredData([]);
   };
   
 
@@ -49,7 +55,7 @@ function SearchBar({ placeholder, data,icon }) {
         <div className="dataResult">
           {filteredData.slice(0, 15).map((value, key) => {
             return (
-              <a className="dataItem" href={value.link} target="_blank">
+              <a className="dataItem"  name={value.name} onClick={selectInput} href={value.link} target="_blank">
                 <p>{value.name} </p>
               </a>
             );
